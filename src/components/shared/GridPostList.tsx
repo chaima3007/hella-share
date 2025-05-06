@@ -2,7 +2,6 @@ import { Models } from "appwrite";
 import { useUserContext } from "../../context/AuthContext";
 import { Link } from "react-router-dom";
 import { getFileView } from "../../lib/appwrite/api";
-import { Divide } from "lucide-react";
 import PostStats from "./PostStats";
 
 
