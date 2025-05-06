@@ -162,24 +162,23 @@ export const useDeletePost = () => {
 
 }
 
+import { Models } from 'appwrite'; // If using Appwrite SDK typings
+
 export const useGetPosts = () => {
-    return useInfiniteQuery({
-        queryKey: [QUERY_KEYS.GET_INFINITE_POSTS],
-        queryFn: getInfinitePosts,
-        getNextPageParam: (lastPage) => {
-            
-            if (lastPage && lastPage.documents.length === 0) return null;
+  return useInfiniteQuery({
+    queryKey: [QUERY_KEYS.GET_INFINITE_POSTS],
+    queryFn: ({ pageParam }) => getInfinitePosts({ pageParam }),
+    getNextPageParam: (lastPage?: Models.DocumentList<Models.Document>) => {
+      if (!lastPage || !lastPage.documents || lastPage.documents.length === 0) {
+        return undefined;
+      }
 
-            const lastId = lastPage.documents[lastPage?.documents.length - 1].$id;
+      const lastDoc = lastPage.documents[lastPage.documents.length - 1];
+      return lastDoc?.$id;
+    },
+  });
+};
 
-            return lastId;
-           
-        }
-     
-    })
-
-
-}
 
 export const useSearchPosts = (searchTerm: string) => {
     return useQuery({

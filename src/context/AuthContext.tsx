@@ -10,6 +10,7 @@ export const INITIAL_USER = {
 	username: '',
 	email: '',
 	imageUrl: '',
+	imageId: '',
 	bio: '',
 };
 const INITIAL_STATE = {

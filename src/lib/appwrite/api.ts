@@ -2,7 +2,7 @@ import { ID, Query } from 'appwrite';
 import { INewPost, INewUser, IUpdatePost, IUpdateUser } from '../../types';
 import { account, appwriteConfig, avatars, databases, storage } from './config';
 import { Permission, Role } from "appwrite";
-import { stat } from 'fs';
+
 
 export async function createUserAccount(user: INewUser) {
 	try {
@@ -156,7 +156,7 @@ export function getFilePreview(fileId: string) {
       fileId,
       2000,
       2000,
-      "top",
+      "north",
       100
     );
 
@@ -331,25 +331,25 @@ export async function deletePost(postId: string, imageId: string) {
 	}
 }
 
-export async function getInfinitePosts({pageParam}:{pageParam: number}){
-	const queries : any[] = [Query.orderDesc('$updatedAt'), Query.limit(10)]
-	if(pageParam) queries.push(Query.cursorAfter(pageParam.toString()));
-	
-	try {
-		const posts = await databases.listDocuments(
-			appwriteConfig.databaseId,
-			appwriteConfig.postCollectionId,
-			queries
-		)
-		if (!posts) throw Error;
-		return posts;
-	} catch (error) {
-		console.error(error);
+export async function getInfinitePosts({ pageParam }: { pageParam?: string }) {
+	const queries: any[] = [Query.orderDesc('$updatedAt'), Query.limit(10)];
+	if (pageParam) {
+	  queries.push(Query.cursorAfter(pageParam));
 	}
-
-
-
-}
+  
+	try {
+	  const posts = await databases.listDocuments(
+		appwriteConfig.databaseId,
+		appwriteConfig.postCollectionId,
+		queries
+	  );
+	  return posts;
+	} catch (error) {
+	  console.error('Error fetching infinite posts:', error);
+	  throw error;
+	}
+  }
+  
 export async function searchPosts(searchTerm: string){
 	try {
 		const posts = await databases.listDocuments(
