@@ -32,7 +32,7 @@ const PostDetails = () => {
             <div className="flex-between w-full">
             <Link to={`/profile/${post?.creator.$id}`} className="flex items-center gap-3" >
                     <img
-                     src={post?.creator?.imageUrl || '/assets/icons/profile-placeHolder.svg'}
+                     src={getFileView(post?.creator?.imageId ) || '/assets/icons/profile-placeHolder.svg'}
                       alt="creator"
                       className="rounded-full w-8 h-8 lg:w-12 lg:h-12"
                        />
