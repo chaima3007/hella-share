@@ -12,6 +12,8 @@ const Saved = () => {
       ...savePost.post,
       creator: {
         imageUrl: currentUser.imageUrl,
+        name: currentUser.name,
+      imageId: currentUser.imageId,
       },
     }))
     .reverse();

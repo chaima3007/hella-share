@@ -24,10 +24,21 @@ const GridPostList = ({posts, showUser = true, showStats = true}:GridPostListPro
           <div className="grid-post_user">
             {showUser && (
               <div className="flex items-center justify-start gap-2 flex-1">
-                <img src={getFileView(post?.creator?.imageId)  || '/assets/icons/profile-placeHolder.svg'}
-                 alt="creator"
-                  className="h-8 w-8 rounded-full" 
-                  />
+
+                { post?.creator?.imageId ?
+                    <img
+                    src={ getFileView(post?.creator?.imageId ) || '/assets/icons/profile-placeHolder.svg'}
+                      alt="creator"
+                      className="rounded-full w-8 h-8 lg:w-12 lg:h-12"
+                      />
+                    : 
+                    <img
+                    src={ post?.creator?.imageUrl || '/assets/icons/profile-placeHolder.svg'}
+                      alt="creator"
+                      className="rounded-full w-8 h-8 lg:w-12 lg:h-12"
+                      />
+
+                }
                   <p className="line-clamp-1">{post.creator.name}</p>
 
               </div>
