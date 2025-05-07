@@ -56,11 +56,13 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 		}
 	};
 	useEffect(() => {
-		//localStorage.getItem('cookieFallback') === null
-		if (localStorage.getItem('cookieFallback') === '[]')
-			navigate('/sign-in');
-		checkAuthUser();
+		const verifyUser = async () => {
+			const isLoggedIn = await checkAuthUser();
+			if (!isLoggedIn) navigate('/sign-in');
+		};
+		verifyUser();
 	}, []);
+	
 	const value = {
 		user,
 		setUser,
